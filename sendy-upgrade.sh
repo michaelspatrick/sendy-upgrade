@@ -10,6 +10,11 @@ if [ "$(id -u)" != "0" ]; then
         exit 1
 fi
 
+if [ -d "${HTML_DIR}.old" ]; then
+  echo "Please remove the ${HTML_DIR}.old directory and restart the script."
+  exit 1
+fi
+
 cd ${SENDY_DIR}
 
 echo "Making a backup of existing Sendy installation..."
@@ -29,6 +34,5 @@ cp -Rv sendy/* ${HTML_DIR};
 echo "Performing cleanup..."
 rm sendy -drf;
 rm sendy.zip -f;
-rm ${HTML_DIR}.old -drf
 chown ${OWNERSHIP} ${HTML_DIR} -R
 chmod -R ugo-x,u+rwX,go+rX,go-w ${HTML_DIR}/;
